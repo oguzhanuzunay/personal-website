@@ -184,5 +184,15 @@ export const en = {
         },
       },
     },
+    // Footer section
+    footer: {
+      terms: 'Terms & Conditions',
+      rights: 'All rights reserved.',
+      social: {
+        instagram: 'Visit my Instagram profile',
+        facebook: 'Visit my Facebook profile',
+        linkedin: 'Visit my LinkedIn profile',
+      },
+    },
   },
 };

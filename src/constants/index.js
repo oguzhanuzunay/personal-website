@@ -224,16 +224,12 @@ const testimonials = [
 
 const socialImgs = [
   {
-    name: 'insta',
+    name: 'instagram',
     imgPath: '/images/insta.png',
   },
   {
-    name: 'fb',
+    name: 'facebook',
     imgPath: '/images/fb.png',
-  },
-  {
-    name: 'x',
-    imgPath: '/images/x.png',
   },
   {
     name: 'linkedin',

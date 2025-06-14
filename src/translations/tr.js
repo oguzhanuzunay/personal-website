@@ -183,6 +183,16 @@ export const tr = {
         },
       },
     },
+    // Footer section
+    footer: {
+      terms: 'Kullanım Koşulları',
+      rights: 'Tüm hakları saklıdır.',
+      social: {
+        instagram: 'Instagram profilimi ziyaret et',
+        facebook: 'Facebook profilimi ziyaret et',
+        linkedin: 'LinkedIn profilimi ziyaret et',
+      },
+    },
     // Other sections will be added as needed
   },
 };
