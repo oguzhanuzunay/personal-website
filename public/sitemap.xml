@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <!-- Ana Sayfa -->
   <url>
-    <loc>https://www.oguzhanuzunay.com/</loc>
+    <loc>https://www.oguzhanuzunay.com</loc>
     <lastmod>2024-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -18,7 +18,7 @@
     <xhtml:link 
       rel="alternate"
       hreflang="x-default"
-      href="https://www.oguzhanuzunay.com/"/>
+      href="https://www.oguzhanuzunay.com"/>
   </url>
   
   <!-- İngilizce Ana Sayfa -->
@@ -38,7 +38,7 @@
     <xhtml:link 
       rel="alternate"
       hreflang="x-default"
-      href="https://www.oguzhanuzunay.com/"/>
+      href="https://www.oguzhanuzunay.com"/>
   </url>
 
   <!-- Türkçe Ana Sayfa -->
@@ -58,6 +58,38 @@
     <xhtml:link 
       rel="alternate"
       hreflang="x-default"
-      href="https://www.oguzhanuzunay.com/"/>
+      href="https://www.oguzhanuzunay.com"/>
+  </url>
+
+  <!-- Ana Bölümler -->
+  <url>
+    <loc>https://www.oguzhanuzunay.com#work</loc>
+    <lastmod>2024-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.oguzhanuzunay.com#experience</loc>
+    <lastmod>2024-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.oguzhanuzunay.com#skills</loc>
+    <lastmod>2024-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.oguzhanuzunay.com#testimonials</loc>
+    <lastmod>2024-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.oguzhanuzunay.com#contact</loc>
+    <lastmod>2024-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset> 
