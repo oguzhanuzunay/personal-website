@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /tr
+Allow: /en
+
+# Sitemaps
+Sitemap: https://www.oguzhanuzunay.com/sitemap.xml
+Sitemap: https://www.oguzhanuzunay.com/tr/sitemap.xml
+Sitemap: https://www.oguzhanuzunay.com/en/sitemap.xml 
