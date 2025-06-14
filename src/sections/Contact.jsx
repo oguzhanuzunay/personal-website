@@ -1,50 +1,97 @@
-import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
+import emailjs from '@emailjs/browser';
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import TitleHeader from "../components/TitleHeader";
-import ContactExperience from "../components/models/contact/ContactExperience";
+import TitleHeader from '../components/TitleHeader';
+import ContactExperience from '../components/models/contact/ContactExperience';
 
 const Contact = () => {
+  const { t } = useTranslation();
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState({ type: '', message: '' }); // success, error
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
+    name: '',
+    email: '',
+    message: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    // Map form field names to state properties
+    const fieldMap = {
+      from_name: 'name',
+      from_email: 'email',
+      message: 'message',
+    };
+
+    setForm((prev) => ({
+      ...prev,
+      [fieldMap[name] || name]: value,
+    }));
+
+    // Reset status when user starts typing again
+    if (status.message) setStatus({ type: '', message: '' });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Show loading state
+    setLoading(true);
+    setStatus({ type: '', message: '' });
+
+    // Map form state back to EmailJS field names
+    const emailJSData = {
+      from_name: form.name,
+      from_email: form.email,
+      message: form.message,
+    };
+
+    if (
+      !import.meta.env.VITE_APP_EMAILJS_SERVICE_ID ||
+      !import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID ||
+      !import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+    ) {
+      setStatus({
+        type: 'error',
+        message: t('contact.form.errors.configuration'),
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
       await emailjs.sendForm(
         import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
         formRef.current,
-        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY,
       );
 
-      // Reset form and stop loading
-      setForm({ name: "", email: "", message: "" });
+      setForm({ name: '', email: '', message: '' });
+      setStatus({
+        type: 'success',
+        message: t('contact.form.success'),
+      });
     } catch (error) {
-      console.error("EmailJS Error:", error); // Optional: show toast
+      console.error('EmailJS Error:', error);
+      setStatus({
+        type: 'error',
+        message: t('contact.form.errors.sending'),
+      });
     } finally {
-      setLoading(false); // Always stop loading, even on error
+      setLoading(false);
     }
   };
 
   return (
-    <section id="contact" className="flex-center section-padding">
+    <section
+      id="contact"
+      className="flex-center section-padding"
+    >
       <div className="w-full h-full md:px-10 px-5">
         <TitleHeader
-          title="Get in Touch – Let’s Connect"
-          sub="💬 Have questions or ideas? Let’s talk! 🚀"
+          title={t('contact.title')}
+          sub={t('contact.subtitle')}
         />
         <div className="grid-12-cols mt-16">
           <div className="xl:col-span-5">
@@ -55,52 +102,71 @@ const Contact = () => {
                 className="w-full flex flex-col gap-7"
               >
                 <div>
-                  <label htmlFor="name">Your name</label>
+                  <label htmlFor="from_name">{t('contact.form.name.label')}</label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="from_name"
+                    name="from_name"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="What’s your good name?"
+                    placeholder={t('contact.form.name.placeholder')}
+                    className="w-full px-4 py-4 md:text-base text-sm placeholder:text-[#aaa] bg-[#151030] rounded-md"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email">Your Email</label>
+                  <label htmlFor="from_email">{t('contact.form.email.label')}</label>
                   <input
                     type="email"
-                    id="email"
-                    name="email"
+                    id="from_email"
+                    name="from_email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="What’s your email address?"
+                    placeholder={t('contact.form.email.placeholder')}
+                    className="w-full px-4 py-4 md:text-base text-sm placeholder:text-[#aaa] bg-[#151030] rounded-md"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message">Your Message</label>
+                  <label htmlFor="message">{t('contact.form.message.label')}</label>
                   <textarea
                     id="message"
                     name="message"
                     value={form.message}
                     onChange={handleChange}
-                    placeholder="How can I help you?"
+                    placeholder={t('contact.form.message.placeholder')}
+                    className="w-full px-4 py-4 md:text-base text-sm placeholder:text-[#aaa] bg-[#151030] rounded-md"
                     rows="5"
                     required
                   />
                 </div>
 
-                <button type="submit">
+                {status.message && (
+                  <div
+                    className={`text-sm ${
+                      status.type === 'success' ? 'text-green-500' : 'text-red-500'
+                    }`}
+                  >
+                    {status.message}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                >
                   <div className="cta-button group">
                     <div className="bg-circle" />
                     <p className="text">
-                      {loading ? "Sending..." : "Send Message"}
+                      {loading ? t('contact.form.button.sending') : t('contact.form.button.send')}
                     </p>
                     <div className="arrow-wrapper">
-                      <img src="/images/arrow-down.svg" alt="arrow" />
+                      <img
+                        src="/images/arrow-down.svg"
+                        alt="arrow"
+                      />
                     </div>
                   </div>
                 </button>
